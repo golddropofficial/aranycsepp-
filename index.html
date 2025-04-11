@@ -1,3 +1,60 @@
-<a href="https://docs.google.com/forms/d/e/1FAIpQLSehYoiUp5CWEtCceEsIOWLgaL9iH8QhUbX3wueyU4rScZSJ8g/viewform?usp=pp_url&entry.607960689=teszt+kos%C3%A1r" target="_blank">
-  <button>Megrendelés leadása</button>
-</a>
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webshop</title>
+</head>
+<body>
+
+    <h1>RO Víztisztítók Webshop</h1>
+
+    <h2>Termékek</h2>
+    <ul>
+        <li>Termék 1 - 5000 Ft <button onclick="addToCart('Termék 1', 5000)">Kosárba</button></li>
+        <li>Termék 2 - 7000 Ft <button onclick="addToCart('Termék 2', 7000)">Kosárba</button></li>
+        <li>Termék 3 - 10000 Ft <button onclick="addToCart('Termék 3', 10000)">Kosárba</button></li>
+    </ul>
+
+    <h3>Kosár:</h3>
+    <ul id="cart">
+        <!-- Kosár tartalma itt jelenik meg -->
+    </ul>
+
+    <p><strong>Összesen:</strong> <span id="total">0</span> Ft</p>
+    <button onclick="clearCart()">Kosár ürítése</button>
+
+    <br><br>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSehYoiUp5CWEtCceEsIOWLgaL9iH8QhUbX3wueyU4rScZSJ8g/viewform?usp=pp_url&entry.607960689=teszt+kos%C3%A1r" target="_blank">
+        <button>Megrendelés leadása</button>
+    </a>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(product, price) {
+            cart.push({product, price});
+            total += price;
+            renderCart();
+        }
+
+        function renderCart() {
+            const cartElement = document.getElementById('cart');
+            cartElement.innerHTML = '';
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.product} - ${item.price} Ft`;
+                cartElement.appendChild(li);
+            });
+            document.getElementById('total').textContent = total;
+        }
+
+        function clearCart() {
+            cart = [];
+            total = 0;
+            renderCart();
+        }
+    </script>
+</body>
+</html>
