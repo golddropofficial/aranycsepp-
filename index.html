@@ -1,132 +1,120 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RO Víztisztítók Webshop</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-        header {
-            background: #007bff;
-            color: white;
-            padding: 20px;
-            position: relative;
-        }
-        .cart {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            background: white;
-            color: black;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-        }
-        .product {
-            background: white;
-            padding: 20px;
-            margin: 20px;
-            display: inline-block;
-            width: 30%;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        footer {
-            background: #333;
-            color: white;
-            padding: 10px;
-            margin-top: 20px;
-        }
-        #cartModal {
-            display: none;
-            position: fixed;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
-            border-radius: 10px;
-            z-index: 10;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Víztisztító Webshop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f4f8;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .product {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 12px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 8px 16px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    #cart {
+      background: #fff;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-top: 24px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>RO Víztisztítók és Kellékek</h1>
-        <div class="cart" onclick="toggleCart()">🛒 Kosár (<span id="cart-count">0</span>)</div>
-    </header>
-    
-    <div class="container">
-        <h2>Termékeink</h2>
-        <div class="product">
-            <h3>RO Víztisztító 1</h3>
-            <p>Ár: 20000 Ft</p>
-            <button onclick="addToCart('RO Víztisztító 1', 20000)">Kosárba</button>
-        </div>
-        <div class="product">
-            <h3>Szűrőbetét 5 db</h3>
-            <p>Ár: 5000 Ft</p>
-            <button onclick="addToCart('Szűrőbetét 5 db', 5000)">Kosárba</button>
-        </div>
-    </div>
+  <h1>Víztisztító Webshop</h1>
 
-    <div id="cartModal">
-        <h2>Kosár</h2>
-        <ul id="cart-items"></ul>
-        <p><strong>Összesen:</strong> <span id="cart-total">0</span> Ft</p>
-        <button onclick="clearCart()">Kosár ürítése</button>
-        <button onclick="toggleCart()">Bezárás</button>
-    </div>
+  <!-- TERMÉKEK -->
+  <div class="product">
+    <h3>RO 5 lépcsős víztisztító</h3>
+    <p>Hatékony ozmózisos víztisztító otthoni használatra.</p>
+    <p>Ár: 34 990 Ft</p>
+    <button onclick="addToCart('RO 5 lépcsős víztisztító', 34990)">Kosárba</button>
+  </div>
 
-    <footer>
-        <p>Kapcsolat: info@viztisztitowebshop.hu</p>
-    </footer>
+  <div class="product">
+    <h3>RO 6 lépcsős víztisztító UV lámpával</h3>
+    <p>UV fertőtlenítéssel, extra biztonságért.</p>
+    <p>Ár: 42 990 Ft</p>
+    <button onclick="addToCart('RO 6 lépcsős UV víztisztító', 42990)">Kosárba</button>
+  </div>
 
-    <script>
-        let cart = [];
+  <div class="product">
+    <h3>5 lépcsős szűrőszett (csere)</h3>
+    <p>Kompatibilis a legtöbb RO rendszerrel. Évente ajánlott csere.</p>
+    <p>Ár: 6 990 Ft</p>
+    <button onclick="addToCart('5 lépcsős szűrőszett', 6990)">Kosárba</button>
+  </div>
 
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            updateCart();
-        }
+  <div class="product">
+    <h3>Membrán szűrő 75 GPD</h3>
+    <p>Magas hatékonyságú ozmózismembrán.</p>
+    <p>Ár: 8 990 Ft</p>
+    <button onclick="addToCart('Membrán szűrő 75 GPD', 8990)">Kosárba</button>
+  </div>
 
-        function updateCart() {
-            document.getElementById('cart-count').innerText = cart.length;
-            const cartItems = document.getElementById('cart-items');
-            const cartTotal = document.getElementById('cart-total');
-            cartItems.innerHTML = '';
+  <div class="product">
+    <h3>Csatlakozókészlet RO rendszerhez</h3>
+    <p>Minden fontos csatlakozó egy csomagban.</p>
+    <p>Ár: 3 490 Ft</p>
+    <button onclick="addToCart('Csatlakozókészlet', 3490)">Kosárba</button>
+  </div>
 
-            let total = 0;
-            cart.forEach(item => {
-                const li = document.createElement('li');
-                li.innerText = `${item.name} - ${item.price} Ft`;
-                cartItems.appendChild(li);
-                total += item.price;
-            });
-            cartTotal.innerText = total;
-        }
+  <!-- KOSÁR -->
+  <div id="cart">
+    <h2>Kosár</h2>
+    <ul id="cart-items"></ul>
+    <p><strong>Összesen:</strong> <span id="total">0</span> Ft</p>
+    <button onclick="clearCart()">Kosár ürítése</button>
+  </div>
 
-        function toggleCart() {
-            const modal = document.getElementById('cartModal');
-            modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
-        }
+  <script>
+    let cart = [];
 
-        function clearCart() {
-            cart = [];
-            updateCart();
-        }
-    </script>
+    function addToCart(product, price) {
+      cart.push({ product, price });
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById('cart-items');
+      const total = document.getElementById('total');
+      cartItems.innerHTML = '';
+      let sum = 0;
+
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.product} - ${item.price} Ft`;
+        cartItems.appendChild(li);
+        sum += item.price;
+      });
+
+      total.textContent = sum;
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCart();
+    }
+  </script>
 </body>
 </html>
