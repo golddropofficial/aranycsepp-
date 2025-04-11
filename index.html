@@ -3,58 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webshop</title>
+    <title>Profi Webshop - Víztisztítók</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .product {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        .product img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product h3 {
+            margin: 15px 0;
+        }
+        .product p {
+            color: #333;
+        }
+        .product button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .product button:hover {
+            background-color: #45a049;
+        }
+        #cart {
+            margin-top: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #cart h3 {
+            margin-top: 0;
+        }
+        .cart-item {
+            margin-bottom: 10px;
+        }
+        .cart-item button {
+            background-color: #ff4d4d;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .cart-total {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .order-btn {
+            background-color: #008CBA;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .order-btn:hover {
+            background-color: #005f73;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            text-align: center;
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+        }
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            transition: 0.3s;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
+<header>
     <h1>RO Víztisztítók Webshop</h1>
+    <p>Kiváló minőségű víztisztítók közvetlenül az Ön otthonába!</p>
+</header>
 
-    <h2>Termékek</h2>
-    <ul>
-        <li>Termék 1 - 5000 Ft <button onclick="addToCart('Termék 1', 5000)">Kosárba</button></li>
-        <li>Termék 2 - 7000 Ft <button onclick="addToCart('Termék 2', 7000)">Kosárba</button></li>
-        <li>Termék 3 - 10000 Ft <button onclick="addToCart('Termék 3', 10000)">Kosárba</button></li>
-    </ul>
+<div class="container">
 
-    <h3>Kosár:</h3>
-    <ul id="cart">
-        <!-- Kosár tartalma itt jelenik meg -->
-    </ul>
+    <!-- Termékek listája -->
+    <div class="products">
+        <div class="product" data-id="1">
+            <img src="https://via.placeholder.com/300x200?text=Termék+1" alt="Termék 1">
+            <h3>Termék 1</h3>
+            <p>5000 Ft</p>
+            <button onclick="addToCart('Termék 1', 5000)">Kosárba</button>
+        </div>
+        <div class="product" data-id="2">
+            <img src="https://via.placeholder.com/300x200?text=Termék+2" alt="Termék 2">
+            <h3>Termék 2</h3>
+            <p>7000 Ft</p>
+            <button onclick="addToCart('Termék 2', 7000)">Kosárba</button>
+        </div>
+        <div class="product" data-id="3">
+            <img src="https://via.placeholder.com/300x200?text=Termék+3" alt="Termék 3">
+            <h3>Termék 3</h3>
+            <p>10000 Ft</p>
+            <button onclick="addToCart('Termék 3', 10000)">Kosárba</button>
+        </div>
+    </div>
 
-    <p><strong>Összesen:</strong> <span id="total">0</span> Ft</p>
-    <button onclick="clearCart()">Kosár ürítése</button>
+    <!-- Kosár -->
+    <div id="cart">
+        <h3>Kosár</h3>
+        <ul id="cart-items">
+            <!-- Kosár tartalma -->
+        </ul>
+        <p class="cart-total">Összesen: <span id="total">0</span> Ft</p>
+        <button class="order-btn" onclick="openOrderForm()">Megrendelés leadása</button>
+    </div>
 
-    <br><br>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSehYoiUp5CWEtCceEsIOWLgaL9iH8QhUbX3wueyU4rScZSJ8g/viewform?usp=pp_url&entry.607960689=teszt+kos%C3%A1r" target="_blank">
-        <button>Megrendelés leadása</button>
-    </a>
+</div>
 
-    <script>
-        let cart = [];
-        let total = 0;
+<!-- Megrendelés modal -->
+<div id="order-form-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeOrderForm()">&times;</span>
+        <h3>Megrendelés</h3>
+        <form action="https://docs.google.com/forms/d/e/1FAIpQLSehYoiUp5CWEtCceEsIOWLgaL9iH8QhUbX3wueyU4rScZSJ8g/formResponse" method="POST" target="_blank">
+            <label for="product">Megrendelt termékek:</label><br>
+            <input type="text" id="order-product" name="entry.607960689" value="" required><br><br>
+            <label for="name">Név:</label><br>
+            <input type="text" id="name" name="entry.123456" required><br><br>
+            <label for="email">E-mail:</label><br>
+            <input type="email" id="email" name="entry.654321" required><br><br>
+            <label for="address">Szállítási cím:</label><br>
+            <input type="text" id="address" name="entry.987654" required><br><br>
+            <button type="submit">Megrendelés elküldése</button>
+        </form>
+    </div>
+</div>
 
-        function addToCart(product, price) {
-            cart.push({product, price});
-            total += price;
-            renderCart();
-        }
+<script>
+    let cart = [];
+    let total = 0;
 
-        function renderCart() {
-            const cartElement = document.getElementById('cart');
-            cartElement.innerHTML = '';
-            cart.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = `${item.product} - ${item.price} Ft`;
-                cartElement.appendChild(li);
-            });
-            document.getElementById('total').textContent = total;
-        }
+    // Termék hozzáadása a kosárhoz
+    function addToCart(product, price) {
+        cart.push({ product, price });
+        total += price;
+        renderCart();
+    }
 
-        function clearCart() {
-            cart = [];
-            total = 0;
-            renderCart();
-        }
-    </script>
+    // Kosár tartalmának frissítése
+    function renderCart() {
+        const cartItemsElement = document.getElementById('cart-items');
+        cartItemsElement.innerHTML = '';
+        cart.forEach(item => {
+            const li = document.createElement('li');
+            li.classList.add('cart-item');
+            li.textContent = `${item.product} - ${item.price} Ft`;
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Törlés';
+            removeButton.onclick = () => removeFromCart(item);
+            li.appendChild(removeButton);
+            cartItemsElement.appendChild(li);
+        });
+        document.getElementById('total').textContent = total;
+    }
+
+    // Termék eltávolítása a kosárból
+    function removeFromCart(item) {
+        cart = cart.filter(cartItem => cartItem !== item);
+        total -= item.price;
+        renderCart();
+    }
+
+    // Megrendelés űrlap megnyitása
+    function openOrderForm() {
+        document.getElementById('order-product').value = cart.map(item => item.product).join(', ');
+        document.getElementById('order-form-modal').style.display = 'block';
+    }
+
+    // Megrendelés űrlap bezárása
+    function closeOrderForm() {
+        document.getElementById('order-form-modal').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>
